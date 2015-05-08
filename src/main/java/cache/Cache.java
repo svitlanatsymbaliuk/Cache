@@ -7,24 +7,24 @@ import java.util.PriorityQueue;
 
 public class Cache<K, V> implements CacheInterface<K, V> {
 
-	private int max_size;
-	private Map<K, V> cacheMap = new HashMap<K, V>();
-	private PriorityQueue<K> cacheQueue;
+	private final int MAX_SIZE;
+	private final Map<K, V> cacheMap = new HashMap<K, V>();
+	private final PriorityQueue<K> cacheQueue;
 
 	public Cache(int max_size) {
-		this.max_size = max_size;
+		this.MAX_SIZE = max_size;
 		cacheQueue = new PriorityQueue<K>();
 	}
 
 	public Cache(int max_size, Comparator<K> comparator) {
-		this.max_size = max_size;
+		this.MAX_SIZE = max_size;
 		cacheQueue = new PriorityQueue<K>(max_size, comparator);
 	}
 
 	@Override
 	public void put(K key, V value) {
 		K pollKey = null;
-		if (cacheQueue.size() == max_size) {
+		if (cacheQueue.size() == MAX_SIZE) {
 			pollKey = cacheQueue.poll();
 		}
 		cacheMap.remove(pollKey);
